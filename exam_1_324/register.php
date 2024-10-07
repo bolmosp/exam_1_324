@@ -17,14 +17,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombreusr = $conn->real_escape_string($_POST['nombreusr']);
     $password = $_POST['password'];
     $rol = $_POST['rol'];
+    $ci = intval($_POST['ci']);
 
     // SQL Insert statement
-    $sql = "INSERT INTO usuarios (nombreusr, password, rol)
-            VALUES ('$nombreusr', '$password', '$rol')";
+    $sql = "INSERT INTO usuarios (nombreusr, password, rol, ci)
+            VALUES ('$nombreusr', '$password', '$rol', '$ci')";
 
     // Execute the query
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        echo "<script type='text/javascript'>alert('Registro añadido. Ahora puede iniciar sesion.');
+            document.location='login.html'</script>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -33,6 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 
 // Redirect to another page after execution
-header("Location: /login.html");
+header("Location: login.html");
 exit();
 ?>

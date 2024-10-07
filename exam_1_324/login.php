@@ -24,20 +24,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
         
         // Verify password
-        if (password_verify($password, $user['password'])) {
+        if ($password == $user['password']) {
             $_SESSION['nombreusr'] = $nombreusr; // Store user info in session
-            header("Location: dashboard.php"); // Redirect to dashboard
+            $_SESSION['rol'] = $user['rol'];
+            $_SESSION['ci'] = $user['ci'];
+            header("Location: index.php"); // Redirect to index
         } else {
-            echo "Invalid username or password.";
+            echo "<script type='text/javascript'>alert('Contraseña incorrecta.');
+            document.location='login.html'</script>";
         }
     } else {
-        echo "No account found with that username.";
+        echo "<script type='text/javascript'>alert('No existe cuenta con el nombre de usuario ingresado.');
+        document.location='login.html'</script>";
     }
 }
 
 $conn->close();
-
-// Redirect to another page after execution
-header("Location: index.html");
-exit();
 ?>
